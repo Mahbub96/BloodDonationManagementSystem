@@ -66,7 +66,7 @@ public class HomePage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1399, 768));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setType(java.awt.Window.Type.UTILITY);
+        setName("fullFrame"); // NOI18N
 
         HomePage.setMaximumSize(new java.awt.Dimension(1387, 646));
 
