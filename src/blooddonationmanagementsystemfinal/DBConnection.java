@@ -17,9 +17,11 @@ public class DBConnection {
         try{
             Class.forName("org.sqlite.JDBC");
             Connection con = DriverManager.getConnection("sdbc:sqlite:UsersDB.db");
-            
+            System.out.println("Connection Successfully");
+            return con;
         }catch(Exception e){
-            
+            System.out.println("Connection failed due to "+e);
+            return null;
         }
     }
 }
