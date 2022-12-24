@@ -4,6 +4,10 @@
  */
 package blooddonationmanagementsystemfinal;
 
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author mahbub
@@ -28,6 +32,7 @@ public class HomePage extends javax.swing.JFrame {
         HeaderBannerLabel = new javax.swing.JLabel();
         DashboardPanel = new javax.swing.JPanel();
         ProfilePicPanel = new javax.swing.JPanel();
+        profilePic = new javax.swing.JLabel();
         DashboardProfileNamePanel = new javax.swing.JPanel();
         fullName = new javax.swing.JLabel();
         userName = new javax.swing.JLabel();
@@ -38,7 +43,6 @@ public class HomePage extends javax.swing.JFrame {
         groupNameLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lastDonate = new javax.swing.JLabel();
-        BloodLogoLabel = new javax.swing.JLabel();
         DashboardContactPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         phoneNumberLabel = new javax.swing.JLabel();
@@ -46,11 +50,13 @@ public class HomePage extends javax.swing.JFrame {
         addressLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         editProfileBtn = new javax.swing.JButton();
+        BloodLogoLabel = new javax.swing.JLabel();
         mainTablePanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         searchByID = new javax.swing.JTextField();
+        searchByNameBtn = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         selectedBloodGroup = new javax.swing.JComboBox<>();
@@ -58,9 +64,14 @@ public class HomePage extends javax.swing.JFrame {
         mainTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(800, 725));
+        setMaximumSize(new java.awt.Dimension(1399, 768));
+        setMinimumSize(new java.awt.Dimension(800, 500));
+        setType(java.awt.Window.Type.UTILITY);
+
+        HomePage.setMaximumSize(new java.awt.Dimension(1387, 646));
 
         HeaderBannerPannel.setBackground(new java.awt.Color(255, 51, 51));
+        HeaderBannerPannel.setMaximumSize(new java.awt.Dimension(1381, 126));
 
         HeaderBannerLabel.setFont(new java.awt.Font("Fira Code", 1, 45)); // NOI18N
         HeaderBannerLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -73,8 +84,8 @@ public class HomePage extends javax.swing.JFrame {
             HeaderBannerPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HeaderBannerPannelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(HeaderBannerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(170, 170, 170))
+                .addComponent(HeaderBannerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 1369, Short.MAX_VALUE)
+                .addContainerGap())
         );
         HeaderBannerPannelLayout.setVerticalGroup(
             HeaderBannerPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,16 +95,32 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        DashboardPanel.setMaximumSize(new java.awt.Dimension(399, 609));
+
+        ProfilePicPanel.setMaximumSize(new java.awt.Dimension(286, 126));
+
+        profilePic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        profilePic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/blooddonationmanagementsystemfinal/hackerrank_c++.png"))); // NOI18N
+        profilePic.setText("Profile_pic");
+
         javax.swing.GroupLayout ProfilePicPanelLayout = new javax.swing.GroupLayout(ProfilePicPanel);
         ProfilePicPanel.setLayout(ProfilePicPanelLayout);
         ProfilePicPanelLayout.setHorizontalGroup(
             ProfilePicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(ProfilePicPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(profilePic, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         ProfilePicPanelLayout.setVerticalGroup(
             ProfilePicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 126, Short.MAX_VALUE)
+            .addGroup(ProfilePicPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(profilePic, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
+
+        DashboardProfileNamePanel.setMaximumSize(new java.awt.Dimension(252, 89));
 
         fullName.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
         fullName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -125,6 +152,8 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
+        DashboardInfoPanel.setMaximumSize(new java.awt.Dimension(0, 358));
+
         javax.swing.GroupLayout DashboardInfoPanelLayout = new javax.swing.GroupLayout(DashboardInfoPanel);
         DashboardInfoPanel.setLayout(DashboardInfoPanelLayout);
         DashboardInfoPanelLayout.setHorizontalGroup(
@@ -135,6 +164,10 @@ public class HomePage extends javax.swing.JFrame {
             DashboardInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 358, Short.MAX_VALUE)
         );
+
+        BloodGroupPanel.setMaximumSize(new java.awt.Dimension(327, 103));
+
+        BloodGroupNamePanel.setMaximumSize(new java.awt.Dimension(242, 64));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setText("Blood Group : ");
@@ -158,7 +191,7 @@ public class HomePage extends javax.swing.JFrame {
                     .addGroup(BloodGroupNamePanelLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lastDonate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lastDonate, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(BloodGroupNamePanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -178,27 +211,23 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        BloodLogoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/blooddonationmanagementsystemfinal/main_icon.png"))); // NOI18N
-
         javax.swing.GroupLayout BloodGroupPanelLayout = new javax.swing.GroupLayout(BloodGroupPanel);
         BloodGroupPanel.setLayout(BloodGroupPanelLayout);
         BloodGroupPanelLayout.setHorizontalGroup(
             BloodGroupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BloodGroupPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BloodLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BloodGroupNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(BloodGroupNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 85, Short.MAX_VALUE))
         );
         BloodGroupPanelLayout.setVerticalGroup(
             BloodGroupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BloodGroupPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(BloodGroupPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BloodLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BloodGroupNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(BloodGroupNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
+
+        DashboardContactPanel.setMaximumSize(new java.awt.Dimension(385, 52));
 
         jLabel2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel2.setText("Contact  : ");
@@ -240,9 +269,16 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.setMaximumSize(new java.awt.Dimension(384, 40));
+
         editProfileBtn.setBackground(new java.awt.Color(204, 204, 204));
         editProfileBtn.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         editProfileBtn.setText("Edit Profile");
+        editProfileBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProfileBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -251,7 +287,7 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(117, 117, 117)
                 .addComponent(editProfileBtn)
-                .addContainerGap(189, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,39 +297,48 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        BloodLogoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        BloodLogoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/blooddonationmanagementsystemfinal/main_icon.png"))); // NOI18N
+
         javax.swing.GroupLayout DashboardPanelLayout = new javax.swing.GroupLayout(DashboardPanel);
         DashboardPanel.setLayout(DashboardPanelLayout);
         DashboardPanelLayout.setHorizontalGroup(
             DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DashboardPanelLayout.createSequentialGroup()
                 .addGroup(DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(DashboardProfileNamePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DashboardContactPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(DashboardPanelLayout.createSequentialGroup()
                         .addGroup(DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BloodGroupPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DashboardProfileNamePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(DashboardContactPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashboardPanelLayout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DashboardInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(DashboardPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(ProfilePicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(DashboardPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(BloodLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BloodGroupPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DashboardInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DashboardPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(ProfilePicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
         DashboardPanelLayout.setVerticalGroup(
             DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DashboardPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(12, 12, 12)
                 .addComponent(ProfilePicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(DashboardProfileNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(DashboardInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(DashboardPanelLayout.createSequentialGroup()
-                        .addComponent(BloodGroupPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BloodGroupPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BloodLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DashboardContactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -301,10 +346,19 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        mainTablePanel.setMaximumSize(new java.awt.Dimension(987, 501));
+
+        jPanel2.setMaximumSize(new java.awt.Dimension(829, 85));
+
+        jPanel3.setMaximumSize(new java.awt.Dimension(495, 53));
+
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setText("Search By ID : ");
 
         searchByID.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+
+        searchByNameBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        searchByNameBtn.setText("Search");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -313,8 +367,10 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchByID, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(searchByID, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(searchByNameBtn)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,9 +378,12 @@ public class HomePage extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(searchByID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchByID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchByNameBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel4.setMaximumSize(new java.awt.Dimension(328, 73));
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel6.setText("Search By Blood Group : ");
@@ -404,7 +463,8 @@ public class HomePage extends javax.swing.JFrame {
                 .addGroup(mainTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainTablePanelLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 10, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         mainTablePanelLayout.setVerticalGroup(
@@ -413,7 +473,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -423,10 +483,10 @@ public class HomePage extends javax.swing.JFrame {
             HomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomePageLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(HomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(HeaderBannerPannel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, HomePageLayout.createSequentialGroup()
-                        .addComponent(DashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(HomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(HeaderBannerPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(HomePageLayout.createSequentialGroup()
+                        .addComponent(DashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mainTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -438,8 +498,8 @@ public class HomePage extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(HomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(DashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mainTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(mainTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -447,20 +507,26 @@ public class HomePage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(HomePage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(HomePage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(HomePage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void editProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileBtnActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        
+        File f = chooser.getSelectedFile();
+        profilePic.setIcon(new ImageIcon(f.toString()));
+//        filename = f.getAbsolutePath();
+    }//GEN-LAST:event_editProfileBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -528,7 +594,9 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JTable mainTable;
     private javax.swing.JPanel mainTablePanel;
     private javax.swing.JLabel phoneNumberLabel;
+    private javax.swing.JLabel profilePic;
     private javax.swing.JTextField searchByID;
+    private javax.swing.JButton searchByNameBtn;
     private javax.swing.JComboBox<String> selectedBloodGroup;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
