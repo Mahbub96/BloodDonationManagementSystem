@@ -16,7 +16,7 @@ public class DBConnection {
     public static Connection ConnectionDB(){
         try{
             Class.forName("org.sqlite.JDBC");
-            Connection con = DriverManager.getConnection("sdbc:sqlite:UsersDB.db");
+            Connection con = DriverManager.getConnection("jdbc:sqlite:UsersDB.db");
             System.out.println("Connection Successfully");
             return con;
         }catch(Exception e){

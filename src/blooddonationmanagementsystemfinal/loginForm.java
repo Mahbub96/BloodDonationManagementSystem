@@ -4,6 +4,10 @@
  */
 package blooddonationmanagementsystemfinal;
 
+
+import java.sql.*;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Rakiba
@@ -13,8 +17,16 @@ public class loginForm extends javax.swing.JFrame {
     /**
      * Creates new form loginForm
      */
+    
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+    
     public loginForm() {
         initComponents();
+        
+        con = DBConnection.ConnectionDB();
     }
 
     /**
@@ -27,16 +39,16 @@ public class loginForm extends javax.swing.JFrame {
     private void initComponents() {
 
         fullContainerPanel = new javax.swing.JPanel();
-        leftContainerPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        javax.swing.JPanel leftContainerPanel = new javax.swing.JPanel();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
         registerBtn = new javax.swing.JButton();
-        rightContainerPanel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        javax.swing.JPanel rightContainerPanel = new javax.swing.JPanel();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
         loginUserNameField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
         loginPasswardField = new javax.swing.JPasswordField();
         loginBtn = new javax.swing.JButton();
         forgotPasswardLabel = new javax.swing.JLabel();
@@ -106,6 +118,11 @@ public class loginForm extends javax.swing.JFrame {
         loginBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         loginBtn.setForeground(new java.awt.Color(255, 255, 255));
         loginBtn.setText("Log In");
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         forgotPasswardLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         forgotPasswardLabel.setForeground(new java.awt.Color(255, 51, 51));
@@ -203,6 +220,33 @@ public class loginForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        // TODO add your handling code here:
+        String sql = "SELECT * FROM Login where userid LIKE ? AND pass LIKE ?";
+        
+        try{
+            pst = con.prepareStatement(sql);
+            pst.setString(1, loginUserNameField.getText());
+            pst.setString(2, loginPasswardField.getText());
+            
+            rs = pst.executeQuery();
+            
+            
+            if(rs.next()){
+                //JOptionPane.showMessageDialog(null, "Login Successfull!");
+                new loginForm().setVisible(false);
+                new HomePage().setVisible(true);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "user id or Password is Wrong");
+            }
+
+        }
+        catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -241,17 +285,9 @@ public class loginForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel forgotPasswardLabel;
     private javax.swing.JPanel fullContainerPanel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel leftContainerPanel;
     private javax.swing.JButton loginBtn;
     private javax.swing.JPasswordField loginPasswardField;
     private javax.swing.JTextField loginUserNameField;
     private javax.swing.JButton registerBtn;
-    private javax.swing.JPanel rightContainerPanel;
     // End of variables declaration//GEN-END:variables
 }
