@@ -68,6 +68,11 @@ public class loginForm extends javax.swing.JFrame {
         registerBtn.setBackground(new java.awt.Color(0, 204, 0));
         registerBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         registerBtn.setText("Create New Account");
+        registerBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout leftContainerPanelLayout = new javax.swing.GroupLayout(leftContainerPanel);
         leftContainerPanel.setLayout(leftContainerPanelLayout);
@@ -222,7 +227,7 @@ public class loginForm extends javax.swing.JFrame {
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
-        String sql = "SELECT * FROM Login where userid LIKE ? AND pass LIKE ?";
+        String sql = "SELECT * FROM Users_info where user_id LIKE ? AND pass LIKE ?";
         
         try{
             pst = con.prepareStatement(sql);
@@ -246,6 +251,12 @@ public class loginForm extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_loginBtnActionPerformed
+
+    private void registerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBtnActionPerformed
+        // TODO add your handling code here:
+        new loginForm().setVisible(false);
+        new RegisterForm().setVisible(true);
+    }//GEN-LAST:event_registerBtnActionPerformed
 
     /**
      * @param args the command line arguments
