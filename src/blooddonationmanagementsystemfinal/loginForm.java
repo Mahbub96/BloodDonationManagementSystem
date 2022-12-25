@@ -5,13 +5,10 @@
 package blooddonationmanagementsystemfinal;
 
 
+import java.awt.HeadlessException;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Rakiba
- */
 public class loginForm extends javax.swing.JFrame {
 
     /**
@@ -111,6 +108,11 @@ public class loginForm extends javax.swing.JFrame {
         jLabel4.setText("Passward");
 
         loginUserNameField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        loginUserNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginUserNameFieldActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(153, 153, 153));
@@ -228,11 +230,18 @@ public class loginForm extends javax.swing.JFrame {
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
         // TODO add your handling code here:
         String sql = "SELECT * FROM Users_info where user_id LIKE ? AND pass LIKE ?";
+        String user = loginUserNameField.getText();
+        String pass = loginPasswardField.getText();
+        
+        if(user.isBlank() || pass.isBlank()){
+            JOptionPane.showMessageDialog(null, "User id or Password should not Empty!");
+            return;
+        }
         
         try{
             pst = con.prepareStatement(sql);
-            pst.setString(1, loginUserNameField.getText());
-            pst.setString(2, loginPasswardField.getText());
+            pst.setString(1, user);
+            pst.setString(2, pass);
             
             rs = pst.executeQuery();
             
@@ -241,14 +250,15 @@ public class loginForm extends javax.swing.JFrame {
                 //JOptionPane.showMessageDialog(null, "Login Successfull!");
                 new loginForm().setVisible(false);
                 new HomePage().setVisible(true);
+                this.dispose();
             }
             else{
                 JOptionPane.showMessageDialog(null, "user id or Password is Wrong");
             }
 
         }
-        catch(Exception e){
-            
+        catch(HeadlessException | SQLException e){
+            System.out.println(e);
         }
     }//GEN-LAST:event_loginBtnActionPerformed
 
@@ -256,7 +266,12 @@ public class loginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         new loginForm().setVisible(false);
         new RegisterForm().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_registerBtnActionPerformed
+
+    private void loginUserNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginUserNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginUserNameFieldActionPerformed
 
     /**
      * @param args the command line arguments

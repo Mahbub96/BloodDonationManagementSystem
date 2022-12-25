@@ -3,18 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package blooddonationmanagementsystemfinal;
+import java.awt.Color;
+import java.awt.HeadlessException;
+import java.sql.*;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author Rakiba
- */
 public class RegisterForm extends javax.swing.JFrame {
 
     /**
      * Creates new form RegisterForm
      */
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
     public RegisterForm() {
         initComponents();
+        con = DBConnection.ConnectionDB();
     }
 
     /**
@@ -115,7 +120,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
         jLabel3.setText("First Name * : ");
 
-        jLabel4.setText("User ID or User Name *  : ");
+        jLabel4.setText("User ID*  : ");
 
         jLabel5.setText("Phone Number * : ");
 
@@ -147,12 +152,17 @@ public class RegisterForm extends javax.swing.JFrame {
         bloodGroup.setMaximumRowCount(6);
         bloodGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select your group", "A +ve", "A -ve", "B +ve", "B -ve", "O +ve", "O -ve", "AB +ve", "AB -ve" }));
 
-        jLabel11.setText("Adress : ");
+        jLabel11.setText("Address *: ");
 
         jButton1.setBackground(new java.awt.Color(51, 204, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Submit Now");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         gender.add(maleBtn);
         maleBtn.setText("Male");
@@ -164,10 +174,34 @@ public class RegisterForm extends javax.swing.JFrame {
         otherBtn.setText("Other");
 
         area.setText("Area Name");
+        area.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                areaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                areaFocusLost(evt);
+            }
+        });
 
         district.setText("District");
+        district.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                districtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                districtFocusLost(evt);
+            }
+        });
 
         country.setText("Country");
+        country.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                countryFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                countryFocusLost(evt);
+            }
+        });
 
         jLabel12.setText("Last Donate : ");
 
@@ -211,48 +245,44 @@ public class RegisterForm extends javax.swing.JFrame {
                     .addGroup(registerPanelLayout.createSequentialGroup()
                         .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(registerPanelLayout.createSequentialGroup()
-                                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(registerPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(12, 12, 12)
-                                        .addComponent(dayOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(registerPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(maleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(5, 5, 5)
+                                .addComponent(dayOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(monthOfBirth, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(femaleBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(registerPanelLayout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(yearOfBirth1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(registerPanelLayout.createSequentialGroup()
-                                        .addGap(7, 7, 7)
-                                        .addComponent(otherBtn))))
-                            .addGroup(registerPanelLayout.createSequentialGroup()
-                                .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(area, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(registerPanelLayout.createSequentialGroup()
-                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(bloodGroup, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(monthOfBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(district, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(yearOfBirth1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(registerPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dayOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
+                                .addComponent(maleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(femaleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(otherBtn))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(registerPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dayOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(23, 23, 23)
                                 .addComponent(monthOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(33, 33, 33)
                                 .addComponent(yearOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(registerPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(area, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(district, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(registerPanelLayout.createSequentialGroup()
+                .addGap(138, 138, 138)
+                .addComponent(bloodGroup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         registerPanelLayout.setVerticalGroup(
             registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,6 +388,100 @@ public class RegisterForm extends javax.swing.JFrame {
     private void phoneNumber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumber1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_phoneNumber1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        //String sql = "insert into FROM Users_info where user_id LIKE ? AND pass LIKE ?";
+        String sql = "INSERT INTO Users_info (first_name,last_name,blood_group,gender,user_id,pass,contact,dob,ldod,area,district,country,times) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try{
+            
+            String date = dayOfBirth.getSelectedItem().toString() +"/"+ monthOfBirth.getSelectedItem().toString() +"/"+ yearOfBirth1.getSelectedItem().toString();
+            String lastDateOfDonation = dayOfDonate.getSelectedItem().toString() +"/"+ monthOfDonate.getSelectedItem().toString() +"/"+ yearOfDonate.getSelectedItem().toString();
+            String gen = maleBtn.isSelected() == true ? "male" : femaleBtn.isSelected() == true ? "female" : otherBtn.isSelected() == true ? "Other" : "null";
+            
+            String UserId = userId.getText();
+            String FirstName = firstName1.getText();
+            String Pass = registerPassward.getText();
+            String BloodGroup = bloodGroup.getSelectedItem().toString();
+            
+            if(UserId.isBlank() || FirstName.isBlank() || Pass.isBlank() || BloodGroup.isBlank()){
+                JOptionPane.showMessageDialog(null, "Some Fields Are Required");
+                return;
+            }
+            
+            
+            pst = con.prepareStatement(sql);
+            
+            pst.setString(1, FirstName);
+            pst.setString(2, lastName.getText());
+            pst.setString(3, BloodGroup);
+            pst.setString(4, gen);
+            pst.setString(5, UserId);
+            pst.setString(6, Pass);
+            pst.setString(7, phoneNumber1.getText());
+            pst.setString(8, date);
+            pst.setString(9, lastDateOfDonation);
+            pst.setString(10, area.getText());
+            pst.setString(11, district.getText());
+            pst.setString(12, country.getText());
+            pst.setInt(13, 0);
+            
+            
+            pst.execute();
+            new RegisterForm().setVisible(false);
+            new HomePage().setVisible(true);
+            this.dispose();
+            
+            
+
+        }
+        catch(HeadlessException | SQLException e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void areaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_areaFocusGained
+        // TODO add your handling code here:
+        if("Area Name".equals(area.getText())){
+            area.setText("");
+        }
+    }//GEN-LAST:event_areaFocusGained
+
+    private void areaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_areaFocusLost
+        // TODO add your handling code here:
+        if("".equals(area.getText())){
+            area.setText("Area Name");
+        }
+    }//GEN-LAST:event_areaFocusLost
+
+    private void districtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_districtFocusGained
+        // TODO add your handling code here:
+        if("District".equals(district.getText())){
+            district.setText("");
+        }
+    }//GEN-LAST:event_districtFocusGained
+
+    private void countryFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFocusGained
+        // TODO add your handling code here:
+        if("Country".equals(country.getText())){
+            country.setText("");
+        }
+    }//GEN-LAST:event_countryFocusGained
+
+    private void countryFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_countryFocusLost
+        // TODO add your handling code here:
+        if("".equals(country.getText())){
+            country.setText("Country");
+        }
+    }//GEN-LAST:event_countryFocusLost
+
+    private void districtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_districtFocusLost
+        // TODO add your handling code here:
+        if("".equals(district.getText())){
+            district.setText("District");
+        }
+    }//GEN-LAST:event_districtFocusLost
 
     /**
      * @param args the command line arguments
