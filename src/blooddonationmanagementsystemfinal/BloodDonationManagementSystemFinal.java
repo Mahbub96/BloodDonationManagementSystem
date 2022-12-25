@@ -15,8 +15,7 @@ public class BloodDonationManagementSystemFinal {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        HomePage f = new HomePage();
-        f.show();
+        new loginForm().show();
     }
     
 }
