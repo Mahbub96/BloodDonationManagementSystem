@@ -6,10 +6,7 @@ package blooddonationmanagementsystemfinal;
 
 
 import java.sql.*;
-import java.time.Instant;
 import java.util.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -384,21 +381,38 @@ public class HomePage extends javax.swing.JFrame {
         jLabel5.setText("Search By ID : ");
 
         searchByID.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        searchByID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchByIDKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchByIDKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                searchByIDKeyTyped(evt);
+            }
+        });
 
         searchByNameBtn.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         searchByNameBtn.setText("Search");
+        searchByNameBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchByNameBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchByID, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchByNameBtn)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,6 +432,16 @@ public class HomePage extends javax.swing.JFrame {
 
         selectedBloodGroup.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         selectedBloodGroup.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select any one", "A +ve", "A -ve", "B +ve", "B -ve", "O +ve", "O -ve", "AB +ve", "AB -ve" }));
+        selectedBloodGroup.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+                selectedBloodGroupPopupMenuCanceled(evt);
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                selectedBloodGroupPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -478,6 +502,8 @@ public class HomePage extends javax.swing.JFrame {
         });
         mainTable.setGridColor(new java.awt.Color(153, 153, 153));
         mainTable.setMaximumSize(new java.awt.Dimension(90, 50000));
+        mainTable.setRowSelectionAllowed(false);
+        mainTable.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(mainTable);
 
         javax.swing.GroupLayout mainTablePanelLayout = new javax.swing.GroupLayout(mainTablePanel);
@@ -560,9 +586,122 @@ public class HomePage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_editProfileBtnActionPerformed
 
+    private void searchByNameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByNameBtnActionPerformed
+        // TODO add your handling code here:
+        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info where user_id like ? ORDER BY ldod ASC";
+        int serial = 0;
+        try {
+            pst = con.prepareStatement(sql);
+            pst.setString(1, "%"+searchByID.getText()+"%");
+            rs = pst.executeQuery();
+            
+            DefaultTableModel dtm = (DefaultTableModel) mainTable.getModel();
+            dtm.setRowCount(0);
+            
+            while(rs.next()){
+                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+                String bloodGroup = rs.getString("blood_group");
+                String gender = rs.getString("gender");
+                String contact = rs.getString("contact");
+                String ldod = rs.getString("ldod");
+                String ser = Integer.toString(++serial);
+                
+                Date date1 = java.sql.Date.valueOf(ldod);
+                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+                
+                
+                int days = (int) (((today.getTime() - date1.getTime()) / 3600000)/ 24);
+                String lastDayOfDonation = Integer.toString(days)+" Days age.";
+                
+                
+                String tbData[] = {ser,name,bloodGroup,gender,contact,lastDayOfDonation};
+                DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
+                
+                tblModel.addRow(tbData);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                rs.close();
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }       
+        
+    }//GEN-LAST:event_searchByNameBtnActionPerformed
+
+    private void searchByIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchByIDKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchByIDKeyReleased
+
+    private void searchByIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchByIDKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_searchByIDKeyPressed
+
+    private void searchByIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchByIDKeyTyped
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_searchByIDKeyTyped
+
+    private void selectedBloodGroupPopupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_selectedBloodGroupPopupMenuCanceled
+        // TODO add your handling code here:
+        
+        
+                
+    }//GEN-LAST:event_selectedBloodGroupPopupMenuCanceled
+
+    private void selectedBloodGroupPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_selectedBloodGroupPopupMenuWillBecomeInvisible
+        // TODO add your handling code here:
+        String blood_G = selectedBloodGroup.getSelectedItem().toString();                
+        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info where blood_group like ? ORDER BY ldod ASC";
+        int serial = 0;
+        
+        try {
+            pst = con.prepareStatement(sql);
+            pst.setString(1, blood_G+"%");
+            rs = pst.executeQuery();
+            
+            DefaultTableModel dtm = (DefaultTableModel) mainTable.getModel();
+            dtm.setRowCount(0);
+            
+            while(rs.next()){
+                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+                String bloodGroup = rs.getString("blood_group");
+                String gender = rs.getString("gender");
+                String contact = rs.getString("contact");
+                String ldod = rs.getString("ldod");
+                String ser = Integer.toString(++serial);
+                
+                Date date1 = java.sql.Date.valueOf(ldod);
+                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+                
+                
+                int days = (int) (((today.getTime() - date1.getTime()) / 3600000)/ 24);
+                String lastDayOfDonation = Integer.toString(days)+" Days age.";
+                
+                
+                String tbData[] = {ser,name,bloodGroup,gender,contact,lastDayOfDonation};
+                DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
+                
+                tblModel.addRow(tbData);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                rs.close();
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }       
+    }//GEN-LAST:event_selectedBloodGroupPopupMenuWillBecomeInvisible
+
     
     private void updateDashboard(String user) {
-        ZoneId defaultZoneId = ZoneId.systemDefault();
         String sql = "select * from Users_info where user_id like ? ";
         
         System.out.println(user);
@@ -632,7 +771,7 @@ public class HomePage extends javax.swing.JFrame {
      * @param 
      */
     private void updateTable() {
-        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info";
+        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info ";
         int serial = 0;
         try {
             pst = con.prepareStatement(sql);
