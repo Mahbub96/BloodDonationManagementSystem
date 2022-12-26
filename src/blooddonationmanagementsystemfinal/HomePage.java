@@ -4,9 +4,7 @@
  */
 package blooddonationmanagementsystemfinal;
 
-import java.io.File;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
+
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -25,7 +23,15 @@ public class HomePage extends javax.swing.JFrame {
     public HomePage() {
         initComponents();
         con = DBConnection.ConnectionDB();
+        
         updateTable();
+    }
+    public HomePage(String user) {
+        initComponents();
+        con = DBConnection.ConnectionDB();
+        updateDashboard(user);
+        updateTable();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -54,6 +60,7 @@ public class HomePage extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         addressLabel = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        signOut = new javax.swing.JButton();
         editProfileBtn = new javax.swing.JButton();
         BloodLogoLabel = new javax.swing.JLabel();
         mainTablePanel = new javax.swing.JPanel();
@@ -275,6 +282,15 @@ public class HomePage extends javax.swing.JFrame {
 
         jPanel1.setMaximumSize(new java.awt.Dimension(384, 40));
 
+        signOut.setBackground(new java.awt.Color(204, 204, 204));
+        signOut.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        signOut.setText("Sign out");
+        signOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signOutActionPerformed(evt);
+            }
+        });
+
         editProfileBtn.setBackground(new java.awt.Color(204, 204, 204));
         editProfileBtn.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         editProfileBtn.setText("Edit Profile");
@@ -289,15 +305,19 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(15, 15, 15)
+                .addComponent(signOut)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(editProfileBtn)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(editProfileBtn)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(signOut)
+                    .addComponent(editProfileBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -438,8 +458,7 @@ public class HomePage extends javax.swing.JFrame {
         mainTable.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         mainTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Serial No", "Name", "Blood Group", "Gender", "Contact No", "Last Donation"
@@ -520,16 +539,78 @@ public class HomePage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void signOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutActionPerformed
+        // TODO add your handling code here:
+        int res = JOptionPane.showConfirmDialog(null, "Confirm Signout ?", "File",
+                JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (res == 0) {
+            new loginForm().setVisible(true);
+            this.dispose();
+        }  
+    }//GEN-LAST:event_signOutActionPerformed
+
     private void editProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileBtnActionPerformed
         // TODO add your handling code here:
-        JFileChooser chooser = new JFileChooser();
-        chooser.showOpenDialog(null);
-
-        File f = chooser.getSelectedFile();
-        profilePic.setIcon(new ImageIcon(f.toString()));
-//        filename = f.getAbsolutePath();
     }//GEN-LAST:event_editProfileBtnActionPerformed
 
+    
+    private void updateDashboard(String user) {
+        String sql = "select * from Users_info where user_id like ? ";
+        System.out.println(user);
+        try {
+            
+            pst = con.prepareStatement(sql);
+            pst.setString(1, user);
+            rs = pst.executeQuery();
+            
+            if(rs.next()){
+                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+                String userId = rs.getString("user_id");
+                String bloodGroup = rs.getString("blood_group");
+
+                String contact = rs.getString("contact");
+                String ldod = rs.getString("ldod");
+                String address = rs.getString("area")+" , "+rs.getString("district")+" , "+rs.getString("country");
+                
+                                
+                fullName.setText(name);
+                userName.setText(userId);
+                groupNameLabel.setText(bloodGroup);
+                lastDonate.setText(ldod);
+                phoneNumberLabel.setText(contact);
+                addressLabel.setText(address);
+                
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Error occurs");
+            }
+
+
+//            String tbData[] = {ser,name,bloodGroup,gender,contact,ldod};
+//            DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
+//
+//            tblModel.addRow(tbData);
+            
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                rs.close();
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    
+    
+    
+    /**
+     * UpdateTable calls Every time when you search or open this page
+     * @param 
+     */
     private void updateTable() {
         String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info";
         int serial = 0;
@@ -631,6 +712,7 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JTextField searchByID;
     private javax.swing.JButton searchByNameBtn;
     private javax.swing.JComboBox<String> selectedBloodGroup;
+    private javax.swing.JButton signOut;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 }

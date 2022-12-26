@@ -249,7 +249,7 @@ public class loginForm extends javax.swing.JFrame {
             if(rs.next()){
                 //JOptionPane.showMessageDialog(null, "Login Successfull!");
                 new loginForm().setVisible(false);
-                new HomePage().setVisible(true);
+                new HomePage(user).setVisible(true);
                 this.dispose();
             }
             else{
@@ -259,6 +259,13 @@ public class loginForm extends javax.swing.JFrame {
         }
         catch(HeadlessException | SQLException e){
             System.out.println(e);
+        }finally{
+            try {
+                rs.close();
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
         }
     }//GEN-LAST:event_loginBtnActionPerformed
 
