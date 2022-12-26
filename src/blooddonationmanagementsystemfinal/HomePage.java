@@ -6,6 +6,10 @@ package blooddonationmanagementsystemfinal;
 
 
 import java.sql.*;
+import java.time.Instant;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -473,6 +477,7 @@ public class HomePage extends javax.swing.JFrame {
             }
         });
         mainTable.setGridColor(new java.awt.Color(153, 153, 153));
+        mainTable.setMaximumSize(new java.awt.Dimension(90, 50000));
         jScrollPane1.setViewportView(mainTable);
 
         javax.swing.GroupLayout mainTablePanelLayout = new javax.swing.GroupLayout(mainTablePanel);
@@ -552,13 +557,18 @@ public class HomePage extends javax.swing.JFrame {
 
     private void editProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileBtnActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_editProfileBtnActionPerformed
 
     
     private void updateDashboard(String user) {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
         String sql = "select * from Users_info where user_id like ? ";
+        
         System.out.println(user);
         try {
+            
+            
             
             pst = con.prepareStatement(sql);
             pst.setString(1, user);
@@ -572,14 +582,24 @@ public class HomePage extends javax.swing.JFrame {
                 String contact = rs.getString("contact");
                 String ldod = rs.getString("ldod");
                 String address = rs.getString("area")+" , "+rs.getString("district")+" , "+rs.getString("country");
+              
+                Date date1 = java.sql.Date.valueOf(ldod);
+                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
                 
-                                
+                
+                long days = ((today.getTime() - date1.getTime()) / 3600000)/ 24; 
+                                   
+                
                 fullName.setText(name);
+                
                 userName.setText(userId);
                 groupNameLabel.setText(bloodGroup);
-                lastDonate.setText(ldod);
+                lastDonate.setText(days+" days age.");
                 phoneNumberLabel.setText(contact);
                 addressLabel.setText(address);
+                
+                fullName.paintImmediately(fullName.getVisibleRect()); // to update all the values
+                
                 
             }
             else{
@@ -626,8 +646,15 @@ public class HomePage extends javax.swing.JFrame {
                 String ldod = rs.getString("ldod");
                 String ser = Integer.toString(++serial);
                 
+                Date date1 = java.sql.Date.valueOf(ldod);
+                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
                 
-                String tbData[] = {ser,name,bloodGroup,gender,contact,ldod};
+                
+                int days = (int) (((today.getTime() - date1.getTime()) / 3600000)/ 24);
+                String lastDayOfDonation = Integer.toString(days)+" Days age.";
+                
+                
+                String tbData[] = {ser,name,bloodGroup,gender,contact,lastDayOfDonation};
                 DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
                 
                 tblModel.addRow(tbData);

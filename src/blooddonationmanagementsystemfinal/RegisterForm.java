@@ -141,10 +141,10 @@ public class RegisterForm extends javax.swing.JFrame {
         dayOfBirth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
         monthOfBirth.setMaximumRowCount(6);
-        monthOfBirth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" }));
+        monthOfBirth.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
 
         yearOfBirth1.setMaximumRowCount(6);
-        yearOfBirth1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Year", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980" }));
+        yearOfBirth1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Year", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980" }));
 
         jLabel9.setText("Gender : ");
 
@@ -209,10 +209,10 @@ public class RegisterForm extends javax.swing.JFrame {
         dayOfDonate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Day", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
 
         monthOfDonate.setMaximumRowCount(6);
-        monthOfDonate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month", "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" }));
+        monthOfDonate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Month", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
 
         yearOfDonate.setMaximumRowCount(6);
-        yearOfDonate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Year", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980" }));
+        yearOfDonate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Year", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980" }));
 
         jButton2.setBackground(new java.awt.Color(51, 204, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -350,7 +350,7 @@ public class RegisterForm extends javax.swing.JFrame {
                     .addComponent(yearOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
@@ -409,8 +409,8 @@ public class RegisterForm extends javax.swing.JFrame {
 
         try{
             
-            String date = dayOfBirth.getSelectedItem().toString() +"/"+ monthOfBirth.getSelectedItem().toString() +"/"+ yearOfBirth1.getSelectedItem().toString();
-            String lastDateOfDonation = dayOfDonate.getSelectedItem().toString() +"/"+ monthOfDonate.getSelectedItem().toString() +"/"+ yearOfDonate.getSelectedItem().toString();
+            String date =  yearOfBirth1.getSelectedItem().toString() +"-"+ monthOfBirth.getSelectedItem().toString() +"/"+dayOfBirth.getSelectedItem().toString();
+            String lastDateOfDonation = yearOfDonate.getSelectedItem().toString()+"-"+ monthOfDonate.getSelectedItem().toString() +"-"+ dayOfDonate.getSelectedItem().toString() ;
             String gen = maleBtn.isSelected() == true ? "male" : femaleBtn.isSelected() == true ? "female" : otherBtn.isSelected() == true ? "Other" : "null";
             
             String UserId = userId.getText();
@@ -454,7 +454,7 @@ public class RegisterForm extends javax.swing.JFrame {
         }
         finally{
             try {
-                rs.close();
+                //rs.close();
                 pst.close();
             } catch (SQLException e) {
                 System.out.println(e);
