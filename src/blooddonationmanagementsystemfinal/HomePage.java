@@ -7,6 +7,10 @@ package blooddonationmanagementsystemfinal;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import java.sql.*;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -14,8 +18,14 @@ import javax.swing.JFileChooser;
  */
 public class HomePage extends javax.swing.JFrame {
 
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     public HomePage() {
         initComponents();
+        con = DBConnection.ConnectionDB();
+        updateTable();
     }
 
     @SuppressWarnings("unchecked")
@@ -428,17 +438,15 @@ public class HomePage extends javax.swing.JFrame {
         mainTable.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         mainTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(1), "Rakiba Akter", "B +ve", "01877763406", "110 days ago"},
-                { new Integer(2), "Mahbub Alam", "B +ve", "01784310996", "120 days ago"},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Serial No", "Name", "Blood Group", "Contact No", "Last Donation"
+                "Serial No", "Name", "Blood Group", "Gender", "Contact No", "Last Donation"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -516,11 +524,44 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
-        
+
         File f = chooser.getSelectedFile();
         profilePic.setIcon(new ImageIcon(f.toString()));
 //        filename = f.getAbsolutePath();
     }//GEN-LAST:event_editProfileBtnActionPerformed
+
+    private void updateTable() {
+        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info";
+        int serial = 0;
+        try {
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery();
+            
+            while(rs.next()){
+                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+                String bloodGroup = rs.getString("blood_group");
+                String gender = rs.getString("gender");
+                String contact = rs.getString("contact");
+                String ldod = rs.getString("ldod");
+                String ser = Integer.toString(++serial);
+                
+                
+                String tbData[] = {ser,name,bloodGroup,gender,contact,ldod};
+                DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
+                
+                tblModel.addRow(tbData);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                rs.close();
+                pst.close();
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -550,10 +591,8 @@ public class HomePage extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new HomePage().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new HomePage().setVisible(true);
         });
     }
 
