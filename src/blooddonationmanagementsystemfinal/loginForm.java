@@ -254,7 +254,6 @@ public class loginForm extends javax.swing.JFrame {
             }
             else{
                 JOptionPane.showMessageDialog(null, "user id or Password is Wrong");
-                //JOptionPane.showMessageDialog(, pass);
             }
 
         }

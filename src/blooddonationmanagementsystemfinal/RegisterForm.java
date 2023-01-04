@@ -15,7 +15,6 @@ public class RegisterForm extends javax.swing.JFrame {
      */
     Connection con = null;
     PreparedStatement pst = null;
-    ResultSet rs = null;
     
     public RegisterForm() {
         initComponents();
@@ -67,6 +66,7 @@ public class RegisterForm extends javax.swing.JFrame {
         monthOfDonate = new javax.swing.JComboBox<>();
         yearOfDonate = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        ldodNever = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -224,6 +224,18 @@ public class RegisterForm extends javax.swing.JFrame {
             }
         });
 
+        ldodNever.setText("Never");
+        ldodNever.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ldodNeverItemStateChanged(evt);
+            }
+        });
+        ldodNever.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ldodNeverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout registerPanelLayout = new javax.swing.GroupLayout(registerPanel);
         registerPanel.setLayout(registerPanelLayout);
         registerPanelLayout.setHorizontalGroup(
@@ -279,20 +291,22 @@ public class RegisterForm extends javax.swing.JFrame {
                                 .addComponent(femaleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(7, 7, 7)
                                 .addComponent(otherBtn))
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(registerPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dayOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(23, 23, 23)
-                                .addComponent(monthOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(yearOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 100, Short.MAX_VALUE))
                     .addGroup(registerPanelLayout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(registerPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ldodNever)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dayOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(monthOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)
+                        .addComponent(yearOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         registerPanelLayout.setVerticalGroup(
@@ -347,7 +361,8 @@ public class RegisterForm extends javax.swing.JFrame {
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dayOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(monthOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(yearOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearOfDonate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ldodNever))
                 .addGap(18, 18, 18)
                 .addGroup(registerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -409,7 +424,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
         try{
             
-            String date =  yearOfBirth1.getSelectedItem().toString() +"-"+ monthOfBirth.getSelectedItem().toString() +"/"+dayOfBirth.getSelectedItem().toString();
+            String date =  yearOfBirth1.getSelectedItem().toString() +"-"+ monthOfBirth.getSelectedItem().toString() +"-"+dayOfBirth.getSelectedItem().toString();
             String lastDateOfDonation = yearOfDonate.getSelectedItem().toString()+"-"+ monthOfDonate.getSelectedItem().toString() +"-"+ dayOfDonate.getSelectedItem().toString() ;
             String gen = maleBtn.isSelected() == true ? "male" : femaleBtn.isSelected() == true ? "female" : otherBtn.isSelected() == true ? "Other" : "null";
             
@@ -417,10 +432,30 @@ public class RegisterForm extends javax.swing.JFrame {
             String FirstName = firstName1.getText();
             String Pass = registerPassward.getText();
             String BloodGroup = bloodGroup.getSelectedItem().toString();
+            String _area = area.getText();            
+            String _district = district.getText();
+            String _coun = country.getText();
+
             
-            if(UserId.isBlank() || FirstName.isBlank() || Pass.isBlank() || BloodGroup.isBlank()){
+            if(_area.equals("Area Name") || _district.equals("District")|| _coun.equals("Country") || UserId.isBlank() || FirstName.isBlank() || Pass.isBlank() || "null".equals(gen) || BloodGroup.equals("select your group")){
                 JOptionPane.showMessageDialog(null, "Some Fields Are Required");
                 return;
+            }
+            
+//            solving birth date exception
+            try{
+                java.sql.Date.valueOf(date);
+                
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Date of Birth is Required!");
+                return;
+            }
+            
+//            solve last date of donation exception 
+            try{
+                java.sql.Date.valueOf(lastDateOfDonation);
+            }catch(Exception e){
+                lastDateOfDonation = "1950-01-01";
             }
             
             
@@ -435,15 +470,15 @@ public class RegisterForm extends javax.swing.JFrame {
             pst.setString(7, phoneNumber1.getText());
             pst.setString(8, date);
             pst.setString(9, lastDateOfDonation);
-            pst.setString(10, area.getText());
-            pst.setString(11, district.getText());
-            pst.setString(12, country.getText());
+            pst.setString(10, _area);
+            pst.setString(11, _district);
+            pst.setString(12, _coun);
             pst.setInt(13, 0);
             
             
             pst.execute();
-            new RegisterForm().setVisible(false);
-            new HomePage().setVisible(true);
+            this.setVisible(false);
+            new HomePage(UserId).setVisible(true);
             this.dispose();
             
             
@@ -454,7 +489,6 @@ public class RegisterForm extends javax.swing.JFrame {
         }
         finally{
             try {
-                //rs.close();
                 pst.close();
             } catch (SQLException e) {
                 System.out.println(e);
@@ -510,6 +544,26 @@ public class RegisterForm extends javax.swing.JFrame {
             this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void ldodNeverItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ldodNeverItemStateChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_ldodNeverItemStateChanged
+
+    private void ldodNeverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ldodNeverActionPerformed
+        // TODO add your handling code here:
+        if(ldodNever.isSelected()){
+            System.out.println("selected");
+            dayOfDonate.setEnabled(false);
+            monthOfDonate.setEnabled(false);
+            yearOfDonate.setEnabled(false);
+        }else{
+            System.out.println("unselected");
+            dayOfDonate.setEnabled(true);
+            monthOfDonate.setEnabled(true);
+            yearOfDonate.setEnabled(true);
+        }
+    }//GEN-LAST:event_ldodNeverActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -538,10 +592,8 @@ public class RegisterForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegisterForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new RegisterForm().setVisible(true);
         });
     }
 
@@ -560,6 +612,7 @@ public class RegisterForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField lastName;
+    private javax.swing.JCheckBox ldodNever;
     private javax.swing.JRadioButton maleBtn;
     private javax.swing.JComboBox<String> monthOfBirth;
     private javax.swing.JComboBox<String> monthOfDonate;

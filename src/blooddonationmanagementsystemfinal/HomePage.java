@@ -4,12 +4,11 @@
  */
 package blooddonationmanagementsystemfinal;
 
-
+import java.awt.Color;
 import java.sql.*;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -24,15 +23,15 @@ public class HomePage extends javax.swing.JFrame {
     public HomePage() {
         initComponents();
         con = DBConnection.ConnectionDB();
-        
         updateTable();
     }
+
     public HomePage(String user) {
         initComponents();
         con = DBConnection.ConnectionDB();
         updateDashboard(user);
         updateTable();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -55,6 +54,8 @@ public class HomePage extends javax.swing.JFrame {
         groupNameLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lastDonate = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        dateOfBirthLabel = new javax.swing.JLabel();
         DashboardContactPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         phoneNumberLabel = new javax.swing.JLabel();
@@ -193,6 +194,12 @@ public class HomePage extends javax.swing.JFrame {
         lastDonate.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         lastDonate.setText("100 days ago");
 
+        jLabel7.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        jLabel7.setText("Date of Birth : ");
+
+        dateOfBirthLabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        dateOfBirthLabel.setText("jLabel8");
+
         javax.swing.GroupLayout BloodGroupNamePanelLayout = new javax.swing.GroupLayout(BloodGroupNamePanel);
         BloodGroupNamePanel.setLayout(BloodGroupNamePanelLayout);
         BloodGroupNamePanelLayout.setHorizontalGroup(
@@ -208,7 +215,12 @@ public class HomePage extends javax.swing.JFrame {
                     .addGroup(BloodGroupNamePanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(groupNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(groupNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(BloodGroupNamePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateOfBirthLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         BloodGroupNamePanelLayout.setVerticalGroup(
             BloodGroupNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,9 +230,13 @@ public class HomePage extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(BloodGroupNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(dateOfBirthLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(BloodGroupNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(lastDonate))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout BloodGroupPanelLayout = new javax.swing.GroupLayout(BloodGroupPanel);
@@ -236,7 +252,7 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BloodGroupPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BloodGroupNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addGap(24, 24, 24))
         );
 
         DashboardContactPanel.setMaximumSize(new java.awt.Dimension(385, 52));
@@ -362,11 +378,11 @@ public class HomePage extends javax.swing.JFrame {
                     .addComponent(DashboardInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(DashboardPanelLayout.createSequentialGroup()
                         .addGroup(DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(BloodGroupPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BloodLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(BloodLogoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BloodGroupPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
                         .addComponent(DashboardContactPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -500,9 +516,12 @@ public class HomePage extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        mainTable.setCellSelectionEnabled(true);
+        mainTable.setFillsViewportHeight(true);
         mainTable.setGridColor(new java.awt.Color(153, 153, 153));
         mainTable.setMaximumSize(new java.awt.Dimension(90, 50000));
-        mainTable.setRowSelectionAllowed(false);
+        mainTable.setSelectionBackground(new java.awt.Color(0, 204, 51));
+        mainTable.setSurrendersFocusOnKeystroke(true);
         mainTable.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(mainTable);
 
@@ -515,8 +534,8 @@ public class HomePage extends javax.swing.JFrame {
                 .addGroup(mainTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainTablePanelLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 965, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 10, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 965, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         mainTablePanelLayout.setVerticalGroup(
@@ -525,8 +544,8 @@ public class HomePage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout HomePageLayout = new javax.swing.GroupLayout(HomePage);
@@ -578,12 +597,12 @@ public class HomePage extends javax.swing.JFrame {
         if (res == 0) {
             new loginForm().setVisible(true);
             this.dispose();
-        }  
+        }
     }//GEN-LAST:event_signOutActionPerformed
 
     private void editProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileBtnActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_editProfileBtnActionPerformed
 
     private void searchByNameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByNameBtnActionPerformed
@@ -592,32 +611,37 @@ public class HomePage extends javax.swing.JFrame {
         int serial = 0;
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, "%"+searchByID.getText()+"%");
+            pst.setString(1, "%" + searchByID.getText() + "%");
             rs = pst.executeQuery();
-            
+
             DefaultTableModel dtm = (DefaultTableModel) mainTable.getModel();
             dtm.setRowCount(0);
             
-            while(rs.next()){
-                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+            String lastDayOfDonation = "Never!";
+            Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+            while (rs.next()) {
+                String name = rs.getString("first_name") + " " + rs.getString("last_name");
                 String bloodGroup = rs.getString("blood_group");
                 String gender = rs.getString("gender");
                 String contact = rs.getString("contact");
                 String ldod = rs.getString("ldod");
                 String ser = Integer.toString(++serial);
                 
-                Date date1 = java.sql.Date.valueOf(ldod);
-                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
-                
-                
-                int days = (int) (((today.getTime() - date1.getTime()) / 3600000)/ 24);
-                String lastDayOfDonation = Integer.toString(days)+" Days age.";
-                
-                
-                String tbData[] = {ser,name,bloodGroup,gender,contact,lastDayOfDonation};
+                if(!"1950-01-01".equals(ldod)) {
+                    Date date1 = java.sql.Date.valueOf(ldod);
+                    int days = (int) (((today.getTime() - date1.getTime()) / 3600000) / 24);
+                    lastDayOfDonation = Integer.toString(days) + " Days age.";
+                    mainTable.setBackground(days >= 120 ? Color.GREEN : Color.RED);
+                }else{
+                    mainTable.setBackground(Color.GREEN);
+                }
+                String tbData[] = {ser, name, bloodGroup, gender, contact, lastDayOfDonation};
                 DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
                 
+                
                 tblModel.addRow(tbData);
+                
+                
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -628,8 +652,8 @@ public class HomePage extends javax.swing.JFrame {
             } catch (SQLException e) {
                 System.out.println(e);
             }
-        }       
-        
+        }
+
     }//GEN-LAST:event_searchByNameBtnActionPerformed
 
     private void searchByIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchByIDKeyReleased
@@ -638,54 +662,57 @@ public class HomePage extends javax.swing.JFrame {
 
     private void searchByIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchByIDKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_searchByIDKeyPressed
 
     private void searchByIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchByIDKeyTyped
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_searchByIDKeyTyped
 
     private void selectedBloodGroupPopupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_selectedBloodGroupPopupMenuCanceled
         // TODO add your handling code here:
-        
-        
-                
+
+
     }//GEN-LAST:event_selectedBloodGroupPopupMenuCanceled
 
     private void selectedBloodGroupPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_selectedBloodGroupPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
-        String blood_G = selectedBloodGroup.getSelectedItem().toString();                
-        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info where blood_group like ? ORDER BY ldod ASC";
+        String blood_G = selectedBloodGroup.getSelectedItem().toString();
+        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info where blood_group=? ORDER BY ldod ASC";
         int serial = 0;
-        
+
         try {
             pst = con.prepareStatement(sql);
-            pst.setString(1, blood_G+"%");
+            pst.setString(1, blood_G + "%");
             rs = pst.executeQuery();
-            
+
             DefaultTableModel dtm = (DefaultTableModel) mainTable.getModel();
             dtm.setRowCount(0);
+            String lastDayOfDonation = "Never!";
+            Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
             
-            while(rs.next()){
-                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+            while (rs.next()) {
+                String name = rs.getString("first_name") + " " + rs.getString("last_name");
                 String bloodGroup = rs.getString("blood_group");
                 String gender = rs.getString("gender");
                 String contact = rs.getString("contact");
                 String ldod = rs.getString("ldod");
                 String ser = Integer.toString(++serial);
-                
-                Date date1 = java.sql.Date.valueOf(ldod);
-                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+
                 
                 
-                int days = (int) (((today.getTime() - date1.getTime()) / 3600000)/ 24);
-                String lastDayOfDonation = Integer.toString(days)+" Days age.";
                 
+                if(!"1950-01-01".equals(ldod)){
                 
-                String tbData[] = {ser,name,bloodGroup,gender,contact,lastDayOfDonation};
+                    Date date1 = java.sql.Date.valueOf(ldod);
+                    int days = (int) (((today.getTime() - date1.getTime()) / 3600000) / 24);
+                    lastDayOfDonation = Integer.toString(days) + " Days age.";
+                }
+                
+                String tbData[] = {ser, name, bloodGroup, gender, contact, lastDayOfDonation};
                 DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
-                
+
                 tblModel.addRow(tbData);
             }
         } catch (SQLException e) {
@@ -697,60 +724,55 @@ public class HomePage extends javax.swing.JFrame {
             } catch (SQLException e) {
                 System.out.println(e);
             }
-        }       
+        }
     }//GEN-LAST:event_selectedBloodGroupPopupMenuWillBecomeInvisible
 
-    
     private void updateDashboard(String user) {
         String sql = "select * from Users_info where user_id like ? ";
-        
+
         System.out.println(user);
         try {
-            
-            
-            
+
             pst = con.prepareStatement(sql);
             pst.setString(1, user);
             rs = pst.executeQuery();
-            
-            if(rs.next()){
-                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+
+            if (rs.next()) {
+                String name = rs.getString("first_name") + " " + rs.getString("last_name");
                 String userId = rs.getString("user_id");
                 String bloodGroup = rs.getString("blood_group");
+                String date = rs.getString("dob");
 
                 String contact = rs.getString("contact");
                 String ldod = rs.getString("ldod");
-                String address = rs.getString("area")+" , "+rs.getString("district")+" , "+rs.getString("country");
-              
-                Date date1 = java.sql.Date.valueOf(ldod);
-                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+                String address = rs.getString("area") + " , " + rs.getString("district") + " , " + rs.getString("country");
+
                 
-                
-                long days = ((today.getTime() - date1.getTime()) / 3600000)/ 24; 
-                                   
-                
+                if("1950-01-01".equals(ldod)){
+                    lastDonate.setText(" Never");
+                }else {
+                    Date date1 = java.sql.Date.valueOf(ldod);
+                    Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+
+                    long days = ((today.getTime() - date1.getTime()) / 3600000) / 24;
+                    lastDonate.setText(days + " days age.");
+                } 
+
                 fullName.setText(name);
-                
+                dateOfBirthLabel.setText(date);
                 userName.setText(userId);
                 groupNameLabel.setText(bloodGroup);
-                lastDonate.setText(days+" days age.");
+
                 phoneNumberLabel.setText(contact);
                 addressLabel.setText(address);
-                
+
                 fullName.paintImmediately(fullName.getVisibleRect()); // to update all the values
-                
-                
-            }
-            else{
+
+            } else {
                 JOptionPane.showMessageDialog(null, "Error occurs");
             }
 
 
-//            String tbData[] = {ser,name,bloodGroup,gender,contact,ldod};
-//            DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
-//
-//            tblModel.addRow(tbData);
-            
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
@@ -763,39 +785,43 @@ public class HomePage extends javax.swing.JFrame {
         }
     }
 
-    
-    
-    
     /**
      * UpdateTable calls Every time when you search or open this page
-     * @param 
+     *
+     * @param
      */
     private void updateTable() {
-        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info ";
+        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info ORDER BY ldod ASC";
         int serial = 0;
         try {
             pst = con.prepareStatement(sql);
             rs = pst.executeQuery();
             
-            while(rs.next()){
-                String name = rs.getString("first_name") +" "+rs.getString("last_name");
+            mainTable.setSelectionBackground(Color.lightGray);
+            mainTable.setSelectionForeground(Color.BLACK);
+            
+            Date date1;
+            String lastDayOfDonation = "Never ! ";
+            Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+            while (rs.next()) {
+                String name = rs.getString("first_name") + " " + rs.getString("last_name");
                 String bloodGroup = rs.getString("blood_group");
                 String gender = rs.getString("gender");
                 String contact = rs.getString("contact");
                 String ldod = rs.getString("ldod");
                 String ser = Integer.toString(++serial);
                 
-                Date date1 = java.sql.Date.valueOf(ldod);
-                Date today = java.sql.Date.valueOf(java.time.LocalDate.now());
+
                 
-                
-                int days = (int) (((today.getTime() - date1.getTime()) / 3600000)/ 24);
-                String lastDayOfDonation = Integer.toString(days)+" Days age.";
-                
-                
-                String tbData[] = {ser,name,bloodGroup,gender,contact,lastDayOfDonation};
+                if(!"1950-01-01".equals(ldod)){
+                    date1 = java.sql.Date.valueOf(ldod);
+                    int days = (int) (((today.getTime() - date1.getTime()) / 3600000) / 24);
+                    lastDayOfDonation = Integer.toString(days) + " Days ago.";
+                }
+
+                String tbData[] = {ser, name, bloodGroup, gender, contact, lastDayOfDonation};
                 DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
-                
+
                 tblModel.addRow(tbData);
             }
         } catch (SQLException e) {
@@ -856,6 +882,7 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JPanel HomePage;
     private javax.swing.JPanel ProfilePicPanel;
     private javax.swing.JLabel addressLabel;
+    private javax.swing.JLabel dateOfBirthLabel;
     private javax.swing.JButton editProfileBtn;
     private javax.swing.JLabel fullName;
     private javax.swing.JLabel groupNameLabel;
@@ -865,6 +892,7 @@ public class HomePage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
