@@ -397,6 +397,11 @@ public class HomePage extends javax.swing.JFrame {
         jLabel5.setText("Search By ID : ");
 
         searchByID.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        searchByID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchByIDActionPerformed(evt);
+            }
+        });
         searchByID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 searchByIDKeyPressed(evt);
@@ -557,7 +562,7 @@ public class HomePage extends javax.swing.JFrame {
                 .addGroup(HomePageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(HeaderBannerPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(HomePageLayout.createSequentialGroup()
-                        .addComponent(DashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(mainTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -679,7 +684,7 @@ public class HomePage extends javax.swing.JFrame {
     private void selectedBloodGroupPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_selectedBloodGroupPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
         String blood_G = selectedBloodGroup.getSelectedItem().toString();
-        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info where blood_group=? ORDER BY ldod ASC";
+        String sql = "select first_name,last_name,blood_group,gender,contact,ldod from Users_info where blood_group LIKE ? ORDER BY ldod ASC";
         int serial = 0;
 
         try {
@@ -726,6 +731,10 @@ public class HomePage extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_selectedBloodGroupPopupMenuWillBecomeInvisible
+
+    private void searchByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchByIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchByIDActionPerformed
 
     private void updateDashboard(String user) {
         String sql = "select * from Users_info where user_id like ? ";

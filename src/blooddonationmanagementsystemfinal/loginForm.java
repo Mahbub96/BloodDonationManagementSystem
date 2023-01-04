@@ -120,6 +120,11 @@ public class loginForm extends javax.swing.JFrame {
         jLabel5.setText("User Name");
 
         loginPasswardField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        loginPasswardField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginPasswardFieldActionPerformed(evt);
+            }
+        });
 
         loginBtn.setBackground(new java.awt.Color(255, 51, 51));
         loginBtn.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -279,6 +284,10 @@ public class loginForm extends javax.swing.JFrame {
     private void loginUserNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginUserNameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginUserNameFieldActionPerformed
+
+    private void loginPasswardFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginPasswardFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginPasswardFieldActionPerformed
 
     /**
      * @param args the command line arguments
