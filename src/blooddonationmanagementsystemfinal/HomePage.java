@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  * @author mahbub
  */
 public class HomePage extends javax.swing.JFrame {
-
+    String user;
     Connection con = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
@@ -28,6 +28,7 @@ public class HomePage extends javax.swing.JFrame {
 
     public HomePage(String user) {
         initComponents();
+        this.user = user;
         con = DBConnection.ConnectionDB();
         updateDashboard(user);
         updateTable();
@@ -605,6 +606,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void editProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileBtnActionPerformed
         // TODO add your handling code here:
+        new EditDashboard().setVisible(true);
 
     }//GEN-LAST:event_editProfileBtnActionPerformed
 

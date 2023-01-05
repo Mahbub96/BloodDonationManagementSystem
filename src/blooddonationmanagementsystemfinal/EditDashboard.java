@@ -4,17 +4,34 @@
  */
 package blooddonationmanagementsystemfinal;
 
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Rakiba
  */
 public class EditDashboard extends javax.swing.JFrame {
 
+    String UserId;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+
     /**
      * Creates new form EditDashboard
      */
     public EditDashboard() {
         initComponents();
+        con = DBConnection.ConnectionDB();
+    }
+    public EditDashboard(String UserId) {
+        this.UserId = UserId;
+        initComponents();
+        con = DBConnection.ConnectionDB();
     }
 
     /**
@@ -335,23 +352,21 @@ public class EditDashboard extends javax.swing.JFrame {
     private void updateProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateProfileBtnActionPerformed
         // TODO add your handling code here:
         //String sql = "insert into FROM Users_info where user_id LIKE ? AND pass LIKE ?";
-        String sql = "INSERT INTO Users_info (first_name,last_name,blood_group,gender,user_id,pass,contact,dob,ldod,area,district,country,times) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Users_info (first_name,last_name,blood_group,gender,contact,dob,ldod,area,district,country) VALUES(,?,?,?,?,?,?,?,?,?,?)";
 
         try{
 
             String date =  updateYearOfBirth.getSelectedItem().toString() +"-"+ updateMonthOfBirth.getSelectedItem().toString() +"-"+updateDayOfBirth.getSelectedItem().toString();
             String lastDateOfDonation = updateYearOfDonate.getSelectedItem().toString()+"-"+ updateMonthOfDonate.getSelectedItem().toString() +"-"+ UpdateDayOfDonate.getSelectedItem().toString() ;
-            String gen = maleBtn.isSelected() == true ? "male" : femaleBtn.isSelected() == true ? "female" : otherBtn.isSelected() == true ? "Other" : "null";
+//            String gen = maleBtn.isSelected() == true ? "male" : femaleBtn.isSelected() == true ? "female" : otherBtn.isSelected() == true ? "Other" : "null";
 
-            String UserId = userId.getText();
             String FirstName = updateFirstName.getText();
-            String Pass = registerPassward.getText();
             String BloodGroup = updateBloodGroup.getSelectedItem().toString();
             String _area = updateArea.getText();
             String _district = updateDistrict.getText();
             String _coun = updateCountry.getText();
 
-            if(_area.equals("Area Name") || _district.equals("District")|| _coun.equals("Country") || UserId.isBlank() || FirstName.isBlank() || Pass.isBlank() || "null".equals(gen) || BloodGroup.equals("select your group")){
+            if(_area.equals("Area Name") || _district.equals("District")|| _coun.equals("Country") || FirstName.isBlank() || BloodGroup.equals("select your group")){
                 JOptionPane.showMessageDialog(null, "Some Fields Are Required");
                 return;
             }
@@ -377,9 +392,6 @@ public class EditDashboard extends javax.swing.JFrame {
             pst.setString(1, FirstName);
             pst.setString(2, updateLastName.getText());
             pst.setString(3, BloodGroup);
-            pst.setString(4, gen);
-            pst.setString(5, UserId);
-            pst.setString(6, Pass);
             pst.setString(7, UpdatedphoneNumber.getText());
             pst.setString(8, date);
             pst.setString(9, lastDateOfDonation);
@@ -394,13 +406,13 @@ public class EditDashboard extends javax.swing.JFrame {
             this.dispose();
 
         }
-        catch(HeadlessException | SQLException e){
+        catch(Exception e){
             System.out.println(e);
         }
         finally{
             try {
                 pst.close();
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 System.out.println(e);
             }
         }
