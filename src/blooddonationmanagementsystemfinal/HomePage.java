@@ -606,7 +606,7 @@ public class HomePage extends javax.swing.JFrame {
 
     private void editProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileBtnActionPerformed
         // TODO add your handling code here:
-        new EditDashboard().setVisible(true);
+        new EditDashboard(user).setVisible(true);
 
     }//GEN-LAST:event_editProfileBtnActionPerformed
 
@@ -636,12 +636,11 @@ public class HomePage extends javax.swing.JFrame {
                     Date date1 = java.sql.Date.valueOf(ldod);
                     int days = (int) (((today.getTime() - date1.getTime()) / 3600000) / 24);
                     lastDayOfDonation = Integer.toString(days) + " Days age.";
-                    mainTable.setBackground(days >= 120 ? Color.GREEN : Color.RED);
-                }else{
-                    mainTable.setBackground(Color.GREEN);
+//                    mainTable.setBackground(days >= 120 ? Color.GREEN : Color.RED);
                 }
                 String tbData[] = {ser, name, bloodGroup, gender, contact, lastDayOfDonation};
                 DefaultTableModel tblModel = (DefaultTableModel) mainTable.getModel();
+                
                 
                 
                 tblModel.addRow(tbData);

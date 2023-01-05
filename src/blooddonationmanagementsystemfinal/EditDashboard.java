@@ -4,11 +4,14 @@
  */
 package blooddonationmanagementsystemfinal;
 
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,6 +35,7 @@ public class EditDashboard extends javax.swing.JFrame {
         this.UserId = UserId;
         initComponents();
         con = DBConnection.ConnectionDB();
+        fatchData();
     }
 
     /**
@@ -344,15 +348,59 @@ public class EditDashboard extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void fatchData(){
+        String sql0 = "select * FROM Users_info where user_id LIKE ?";
+        try{
+        pst = con.prepareStatement(sql0);
+            pst.setString(1, UserId);
+            rs = pst.executeQuery();
 
+            
+            while (rs.next()) {
+                String fName = rs.getString("first_name");
+                String lName =  rs.getString("last_name");
+                String bloodGroup = rs.getString("blood_group");
+                String contact = rs.getString("contact");
+                String ldod = rs.getString("ldod");
+                String area = rs.getString("area");
+                String district = rs.getString("district");
+                String country = rs.getString("country");
+                
+                updateFirstName.setText(fName);
+                updateLastName.setText(lName);
+                UpdatedphoneNumber.setText(contact);
+                updateArea.setText(area);
+                updateDistrict.setText(district);
+                updateCountry.setText(country);
+                
+//                dateOfBirthLabel.setText(date);
+                
+                updateBloodGroup.setSelectedItem(bloodGroup);
+
+                
+
+                updateFirstName.paintImmediately(updateFirstName.getVisibleRect());
+                
+                
+                
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }finally{
+            try {
+                pst.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+    }
     private void UpdatedphoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatedphoneNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UpdatedphoneNumberActionPerformed
 
     private void updateProfileBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateProfileBtnActionPerformed
         // TODO add your handling code here:
-        //String sql = "insert into FROM Users_info where user_id LIKE ? AND pass LIKE ?";
-        String sql = "INSERT INTO Users_info (first_name,last_name,blood_group,gender,contact,dob,ldod,area,district,country) VALUES(,?,?,?,?,?,?,?,?,?,?)";
+          String sql = "UPDATE Users_info SET first_name=?,last_name=?,blood_group=?,contact=?,dob=?,ldod=?,area=?,district=?,country=? WHERE user_id=?";
 
         try{
 
@@ -392,19 +440,17 @@ public class EditDashboard extends javax.swing.JFrame {
             pst.setString(1, FirstName);
             pst.setString(2, updateLastName.getText());
             pst.setString(3, BloodGroup);
-            pst.setString(7, UpdatedphoneNumber.getText());
-            pst.setString(8, date);
-            pst.setString(9, lastDateOfDonation);
-            pst.setString(10, _area);
-            pst.setString(11, _district);
-            pst.setString(12, _coun);
-            pst.setInt(13, 0);
+            pst.setString(4, UpdatedphoneNumber.getText());
+            pst.setString(5, date);
+            pst.setString(6, lastDateOfDonation);
+            pst.setString(7, _area);
+            pst.setString(8, _district);
+            pst.setString(9, _coun);
+            pst.setString(10, UserId);
+            
+//            pst.setInt(13, 0);
 
-            pst.execute();
-            this.setVisible(false);
-            new HomePage(UserId).setVisible(true);
-            this.dispose();
-
+            pst.executeUpdate();
         }
         catch(Exception e){
             System.out.println(e);
@@ -462,7 +508,6 @@ public class EditDashboard extends javax.swing.JFrame {
 
     private void backEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backEditBtnActionPerformed
         // TODO add your handling code here:
-        new loginForm().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backEditBtnActionPerformed
 
