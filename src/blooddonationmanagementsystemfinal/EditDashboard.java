@@ -451,6 +451,9 @@ public class EditDashboard extends javax.swing.JFrame {
 //            pst.setInt(13, 0);
 
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Data updated!");
+            new HomePage(UserId).setVisible(true);
+            this.dispose();
         }
         catch(Exception e){
             System.out.println(e);
@@ -458,6 +461,7 @@ public class EditDashboard extends javax.swing.JFrame {
         finally{
             try {
                 pst.close();
+//                updateDashboard(UserId);
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -508,6 +512,7 @@ public class EditDashboard extends javax.swing.JFrame {
 
     private void backEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backEditBtnActionPerformed
         // TODO add your handling code here:
+        new HomePage(UserId).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backEditBtnActionPerformed
 
